@@ -1,0 +1,35 @@
+find command:
+https://www.geeksforgeeks.org/find-command-in-linux-with-examples/
+ 
+ 
+ 
+find .  -type file -mtime +15 |
+ 
+Find files older than 300 days that do not have Stats on the name 
+find . -mtime +300 -type file ! -name "Stats*"
+find . -mtime +260 -type file ! -name "Stats*" -exec rm -f -e {} \;
+ 
+ 
+Find files created in the last 2 min:
+ 
+pcsbat1:pcsperf:/home/users/65/pcsperf/getfiles> ls -l deleteme ; date ; find  . -type file -mmin -2
+-rw-r-----    1 pcsperf  pcsperf           0 Feb 02 09:20 deleteme
+Wed Feb  2 09:22:02 PST 2022
+./deleteme
+ 
+ 
+Files in excluding directory Statistics
+ 
+ 
+ 
+ 
+  find . -type file -name "Stats_SESSION_enoadm_it2appd_Wed*"  -mtime +263 |  awk '{print "rm \""$0"\""}'
+ 
+find . -name Stats_SESSION_enoadm_it2appd_Wed* -type file -mtime +263 -exec rm -f {} \;
+ 
+ 
+for i in $(du -sm  * | awk '$(1!=0.00) {print $2}')
+do
+echo "\n"$i
+cd /traces/stats/$i/Statistics/ ; ls -l |grep -v Oct | awk '{print $6,$7}' | sort |uniq -c
+done ; cd ../..
